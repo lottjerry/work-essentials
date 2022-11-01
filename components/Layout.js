@@ -28,7 +28,8 @@ const Layout = ({ children, title }) => {
 					</nav>
 				</header>
 				<main className="container m-auto mt-4 px-4">{children}</main>
-				<footer className="flex justify-center items-center h-10 shadow-inner">© 2022 Work Essentials. All Rights Reserved.
+				<footer className="flex justify-center items-center h-10 shadow-inner">
+					© 2022 Work Essentials. All Rights Reserved.
 				</footer>
 			</div>
 		</>
