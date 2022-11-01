@@ -21,8 +21,8 @@ const Layout = ({ children, title }) => {
 							<Link href={'/cart'} className="p-2">
 								Schedule
 							</Link>
-							<Link href={'/login'} className="p-2">
-								Login
+							<Link href={'/signin'} className="p-2">
+								Sign in
 							</Link>
 						</div>
 					</nav>

@@ -13,7 +13,7 @@ const Login = () => {
 	return (
 		<>
 			<Head>
-				<title>{'Login | Work Essentials'}</title>
+				<title>{'Sign in | Work Essentials'}</title>
 				<meta name="description" content="Schedule Website" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
@@ -41,8 +41,8 @@ const Login = () => {
 									placeholder="User name"
 									autoFocus
 									{...register('userName', {
-										required: 'Enter a user name',
-										maxLength: 15,
+										required: '⚠ Enter a user name',
+										maxLength: 20,
 									})}
 									className={
 										errors.userName
@@ -62,7 +62,7 @@ const Login = () => {
 									placeholder="Password"
 									autoFocus
 									{...register('password', {
-										required: 'Enter a password',
+										required: '⚠ Enter a password',
 										maxLength: 100,
 									})}
 									className={
@@ -108,6 +108,8 @@ const Login = () => {
 						<div>
 							<button
 								type="submit"
+								data-mdb-ripple="true"
+								data-mdb-ripple-color="light"
 								className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 							>
 								<span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
@@ -120,7 +122,7 @@ const Login = () => {
 								href={'/register'}
 								className=" text-indigo-600 hover:text-indigo-500"
 							>
-								Register
+								Create Account
 							</Link>
 						</div>
 					</form>
