@@ -8,7 +8,7 @@ const Login = () => {
 		formState: { errors },
 	} = useForm();
 
-	const submitHandler = (data) => {};
+	const submitHandler = (data) => {console.log(data)};
 
 	return (
 		<>
@@ -34,27 +34,48 @@ const Login = () => {
 						onSubmit={handleSubmit(submitHandler)}
 					>
 						<input type="hidden" name="remember" defaultValue="true" />
-						<div className="-space-y-px rounded-md shadow-sm">
+						<div className="flex flex-col gap-5 rounded-md shadow-sm">
 							<div>
 								<input
 									type="text"
 									placeholder="User name"
-									{...register('user-name', { required: 'Please enter a user name', maxLength: 15 })}
-									className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+									autoFocus
+									{...register('userName', {
+										required: 'Enter a user name',
+										maxLength: 15,
+									})}
+									className={
+										errors.userName
+											? 'relative block w-full appearance-none rounded-md border border-red-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm'
+											: 'relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
+									}
 								/>
-								{errors.text && (<div className='text-red-500'>{errors.email.message}</div>)}
+								{errors.userName && (
+									<div className="text-red-500 ml-2 block text-sm pt-2">
+										{errors.userName.message}
+									</div>
+								)}
 							</div>
 							<div>
 								<input
 									type="password"
 									placeholder="Password"
-									{...register('Password', {
-										required: true,
-										min: 5,
+									autoFocus
+									{...register('password', {
+										required: 'Enter a password',
 										maxLength: 100,
 									})}
-									className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+									className={
+										errors.password
+											? 'relative block w-full appearance-none rounded-md border border-red-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm'
+											: 'relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
+									}
 								/>
+								{errors.password && (
+									<div className="text-red-500 ml-2 block text-sm pt-2">
+										{errors.password.message}
+									</div>
+								)}
 							</div>
 						</div>
 
