@@ -1,15 +1,45 @@
 import Link from 'next/link';
-import Head from 'next/head';
+import React, { useEffect } from 'react';
+import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
+import { getError } from '../utils/error';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Login = () => {
+	const { data: session } = useSession();
+
+	const router = useRouter();
+	const { redirect } = router.query;
+
+	useEffect(() => {
+		if (session?.user) {
+			router.push(redirect || '/');
+		}
+	}, [router, session, redirect]);
+
 	const {
-		register,
 		handleSubmit,
+		register,
 		formState: { errors },
 	} = useForm();
-
-	const submitHandler = (data) => {console.log(data)};
-
+	const submitHandler = async ({ email, password }) => {
+		try {
+			const result = await signIn('credentials', {
+				redirect: false,
+				email,
+				password,
+			});
+			if (result.error) {
+				toast.error(result.error);
+			}
+		} catch (err) {
+			toast.error(getError(err));
+		}
+	};
 	return (
 		<>
 			<Head>
@@ -17,6 +47,7 @@ const Login = () => {
 				<meta name="description" content="Schedule Website" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+			<ToastContainer position="bottom-center" limit={1} />
 			<div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 				<div className="w-full max-w-md  shadow-2xl border-2 rounded-md">
 					<div>
@@ -38,21 +69,24 @@ const Login = () => {
 							<div>
 								<input
 									type="text"
-									placeholder="User name"
+									placeholder="Email"
 									autoFocus
-									{...register('userName', {
-										required: '⚠ Enter a user name',
-										maxLength: 20,
+									{...register('email', {
+										required: '⚠ Enter a email',
+										pattern: {
+											value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
+											message: 'Please enter valid email',
+										},
 									})}
 									className={
-										errors.userName
+										errors.email
 											? 'relative block w-full appearance-none rounded-md border border-red-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm'
 											: 'relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
 									}
 								/>
-								{errors.userName && (
+								{errors.email && (
 									<div className="text-red-500 ml-2 block text-sm pt-2">
-										{errors.userName.message}
+										{errors.email.message}
 									</div>
 								)}
 							</div>
